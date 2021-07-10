@@ -1,0 +1,11 @@
+include builtins\sha256.e
+
+function asHex(string s)
+string res = ""
+    for i=1 to length(s) do
+        res &= sprintf("%02X",s[i])
+    end for
+    return res
+end function
+
+?asHex(sha256("Rosetta code"))

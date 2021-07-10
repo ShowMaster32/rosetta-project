@@ -1,0 +1,46 @@
+import extensions;
+
+class Point
+{
+    prop int X;
+    prop int Y;
+
+    constructor(int x, int y)
+    {
+        X := x;
+        Y := y
+    }
+
+    constructor()
+        <= (0,0);
+
+    print() { console.printLine("Point") }
+}
+
+class Circle : Point
+{
+    prop int R;
+
+    constructor()
+        <= (0);
+
+    constructor(int r)
+        <= (0, 0, r);
+
+    constructor(int x, int y, int r)
+        <= (x, y)
+    {
+        R := r
+    }
+
+    print() { console.printLine("Circle") }
+}
+
+public program()
+{
+    Point p := new Point();
+    Point c := new Circle();
+
+    p.print();
+    c.print()
+}

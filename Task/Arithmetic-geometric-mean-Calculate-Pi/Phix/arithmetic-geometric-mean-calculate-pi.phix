@@ -1,0 +1,45 @@
+include mpfr.e
+
+mpfr_set_default_prec(-200) -- set precision to 200 decimal places
+mpfr a = mpfr_init(1),
+     n = mpfr_init(1),
+     g = mpfr_init(1),
+     z = mpfr_init(0.25),
+     half = mpfr_init(0.5),
+     x1 = mpfr_init(2),
+     x2 = mpfr_init(),
+     var = mpfr_init()
+mpfr_sqrt(x1,x1)
+mpfr_div(g,g,x1)    -- g:= 1/sqrt(2)
+string prev, this, fmt = "%.200Rf\n"
+for i=1 to 18 do
+    mpfr_add(x1,a,g)
+    mpfr_mul(x1,x1,half)
+    mpfr_mul(x2,a,g)
+    mpfr_sqrt(x2,x2)
+    mpfr_sub(var,x1,a)
+    mpfr_mul(var,var,var)
+    mpfr_mul(var,var,n)
+    mpfr_sub(z,z,var)
+    mpfr_add(n,n,n)
+    mpfr_set(a,x1)
+    mpfr_set(g,x2)
+    mpfr_mul(var,a,a)
+    mpfr_div(var,var,z)
+    this = mpfr_sprintf(fmt,var)
+    if i>1 then
+        if this=prev then exit end if
+        for j=3 to length(this) do
+            if prev[j]!=this[j] then
+                printf(1,"iteration %d matches previous to %d places\n",{i,j-3})
+                exit
+            end if
+        end for
+    end if
+    prev = this
+end for
+if this=prev then
+    printf(1,"identical result to last iteration:\n%s\n",{this})
+else
+    printf(1,"insufficient iterations\n")
+end if

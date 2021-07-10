@@ -1,0 +1,29 @@
+import extensions;
+import system'math;
+import system'routines;
+
+extension op
+{
+    ordinalize()
+    {
+        int i := self.Absolute;
+        if (new int[]::(11,12,13).ifExists(i.mod:100))
+        {
+            ^ i.Printable + "th"
+        };
+
+        (i.mod:10) =>
+            1 { ^ i.Printable + "st" }
+            2 { ^ i.Printable + "nd" }
+            3 { ^ i.Printable + "rd" };
+
+        ^ i.Printable + "th"
+    }
+}
+
+public program()
+{
+    console.printLine(new Range(0,26).selectBy(mssgconst ordinalize<op>[0]));
+    console.printLine(new Range(250,26).selectBy(mssgconst ordinalize<op>[0]));
+    console.printLine(new Range(1000,26).selectBy(mssgconst ordinalize<op>[0]))
+}

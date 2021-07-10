@@ -1,0 +1,9 @@
+constant DEBUG=false
+if DEBUG then
+    puts(1,"debug is on\n")
+end if
+if platform()=WINDOWS then
+    puts(1,"this is windows\n")
+elsif platform()=LINUX then
+    puts(1,"this is linux\n")
+end if

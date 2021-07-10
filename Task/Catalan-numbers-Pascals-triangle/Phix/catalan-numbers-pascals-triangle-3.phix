@@ -1,0 +1,20 @@
+include builtins\mpfr.e
+
+function catalanB(integer n)    -- very very fast!
+sequence catalan = mpz_inits(n),
+         p = mpz_inits(n+1,1)
+mpz p1 = mpz_init(1)
+    if n=0 then return p1 end if
+    for i=1 to n do
+        mpz_mul_si(p1,p[1],2)
+        mpz_sub(catalan[i],p1,p[2])
+        for j=1 to n-i+1 do
+            mpz_add(p1,p1,p[j+1])
+            mpz_set(p[j],p1)
+        end for
+    end for
+    return catalan[n]
+end function
+
+printf(1,"%d: %s (%s)\n",{100,mpz_get_str(catalanB(100))})
+printf(1,"%d: %s (%s)\n",{250,mpz_get_str(catalanB(250))})

@@ -1,0 +1,10 @@
+{{omit from|BASIC}}
+{{omit from|Brlcad}}
+{{omit from|GUISS}}
+{{omit from|PARI/GP}}
+
+
+;Task:
+:* &nbsp; match a string against a regular expression
+:* &nbsp; substitute part of a string using a regular expression
+<br><br>

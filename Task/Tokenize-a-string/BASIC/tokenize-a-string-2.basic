@@ -1,0 +1,13 @@
+' Tokenize a string
+OPTION BASE 1
+
+READ csv$
+DATA "Hello,How,Are,You,Today"
+
+SPLIT csv$ BY "," TO elements$ SIZE n
+
+FOR i = 1 TO n
+    PRINT elements$[i] FORMAT "%s"
+    IF i < n THEN PRINT "." FORMAT "%s"
+NEXT
+PRINT

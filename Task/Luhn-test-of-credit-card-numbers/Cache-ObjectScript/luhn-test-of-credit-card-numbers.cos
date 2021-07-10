@@ -1,0 +1,17 @@
+Class Utils.Check [ Abstract ]
+{
+
+ClassMethod Luhn(x As %String) As %Boolean
+{
+	// https://www.simple-talk.com/sql/t-sql-programming/calculating-and-verifying-check-digits-in-t-sql/
+	SET x=$TRANSLATE(x," "), cd=$EXTRACT(x,*)
+	SET x=$REVERSE($EXTRACT(x,1,*-1)), t=0
+	FOR i=1:1:$LENGTH(x) {
+		SET n=$EXTRACT(x,i)
+		IF i#2 SET n=n*2 IF $LENGTH(n)>1 SET n=$EXTRACT(n,1)+$EXTRACT(n,2)
+		SET t=t+n
+	}
+	QUIT cd=((t*9)#10)
+}
+
+}

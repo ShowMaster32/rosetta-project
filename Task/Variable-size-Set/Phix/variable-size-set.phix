@@ -1,0 +1,4 @@
+include mpfr.e                              -- requires 0.8.1+
+mpfr pi = mpfr_init(0,-1001) -- 1000 dp, +1 for the "3."
+mpfr_const_pi(pi)
+mpfr_printf(1,"PI with 1000 decimals: %.1000RDf\n\n",pi)
