@@ -1,0 +1,10 @@
+-- demo\rosetta\Window_creation.exw
+include pGUI.e
+
+IupOpen()
+Ihandle dlg = IupDialog(IupVbox({IupLabel("hello")},"MARGIN=200x200"))
+IupSetAttribute(dlg,"TITLE","Hello")
+IupCloseOnEscape(dlg)
+IupShow(dlg)
+IupMainLoop()
+IupClose()

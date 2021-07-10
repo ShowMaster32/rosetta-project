@@ -1,0 +1,6 @@
+include mpfr.e
+mpz b = mpz_init(0)
+while true do
+    mpz_add_ui(b,b,1)
+    mpfr_printf(1,"%Zd\n",b)
+end while

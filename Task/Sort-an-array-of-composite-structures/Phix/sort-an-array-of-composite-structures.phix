@@ -1,0 +1,6 @@
+sequence s = {{"grass","green"},{"snow","white"},{"sky","blue"},{"cherry","red"},{0,1.2},{3.4,-1}}
+
+?sort(s)
+function compare_col2(sequence a, b) return compare(a[2],b[2]) end function
+?custom_sort(routine_id("compare_col2"),s)
+?sort_columns(s,{2})    -- 0.8.0+, same result as above w/o needing an explicit comparison routine

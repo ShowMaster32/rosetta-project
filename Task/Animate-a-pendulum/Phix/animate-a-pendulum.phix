@@ -1,0 +1,89 @@
+-- demo\rosetta\animate_pendulum2.exw
+include pGUI.e
+
+Ihandle dlg, canvas, timer
+cdCanvas cdcanvas
+
+constant g = 50
+
+atom angle = PI/2,
+     velocity = 0
+integer w, h, len = 0
+
+function redraw_cb(Ihandle /*ih*/, integer /*posx*/, integer /*posy*/)
+    {w, h} = IupGetIntInt(canvas, "DRAWSIZE")
+    cdCanvasActivate(cdcanvas)
+    cdCanvasClear(cdcanvas)
+    -- new suspension point:
+    integer sX = floor(w/2)
+    integer sY = floor(h/16)
+    -- repaint:
+    integer eX = floor(len*sin(angle)+sX)
+    integer eY = floor(len*cos(angle)+sY)
+    cdCanvasSetForeground(cdcanvas, CD_CYAN)
+    cdCanvasLine(cdcanvas, sX, h-sY, eX, h-eY)
+    cdCanvasSetForeground(cdcanvas, CD_DARK_GREEN)
+    cdCanvasSector(cdcanvas, sX, h-sY, 5, 5, 0, 360)
+    cdCanvasSetForeground(cdcanvas, CD_BLUE)
+    cdCanvasSector(cdcanvas, eX, h-eY, 35, 35, 0, 360)
+    cdCanvasFlush(cdcanvas)
+    return IUP_DEFAULT
+end function
+
+function timer_cb(Ihandle /*ih*/)
+    integer newlen = floor(w/2)-30
+    if newlen!=len then
+        len = newlen
+        atom tmp = 2*g*len*(cos(angle))
+        velocity = iff(tmp<0?0:sqrt(tmp)*sign(velocity))
+    end if
+    atom dt = 0.2/w
+    atom delta = -len*sin(angle)*g
+    velocity += dt*delta
+    angle += dt*velocity
+    IupUpdate(canvas)
+    return IUP_IGNORE
+end function
+
+function map_cb(Ihandle ih)
+    atom res = IupGetDouble(NULL, "SCREENDPI")/25.4
+    IupGLMakeCurrent(canvas)
+    cdcanvas = cdCreateCanvas(CD_GL, "10x10 %g", {res})
+    cdCanvasSetBackground(cdcanvas, CD_PARCHMENT)
+    return IUP_DEFAULT
+end function
+
+function canvas_resize_cb(Ihandle /*canvas*/)
+    integer {canvas_width, canvas_height} = IupGetIntInt(canvas, "DRAWSIZE")
+    atom res = IupGetDouble(NULL, "SCREENDPI")/25.4
+    cdCanvasSetAttribute(cdcanvas, "SIZE", "%dx%d %g", {canvas_width, canvas_height, res})
+    return IUP_DEFAULT
+end function
+
+function esc_close(Ihandle /*ih*/, atom c)
+    if c=K_ESC then return IUP_CLOSE end if
+    return IUP_CONTINUE
+end function
+
+procedure main()
+    IupOpen()
+
+    canvas = IupGLCanvas()
+    IupSetAttribute(canvas, "RASTERSIZE", "640x380")
+    IupSetCallback(canvas, "MAP_CB", Icallback("map_cb"))
+    IupSetCallback(canvas, "ACTION", Icallback("redraw_cb"))
+    IupSetCallback(canvas, "RESIZE_CB", Icallback("canvas_resize_cb"))
+
+    timer = IupTimer(Icallback("timer_cb"), 20)
+
+    dlg = IupDialog(canvas)
+    IupSetAttribute(dlg, "TITLE", "Animated Pendulum")
+    IupSetCallback(dlg, "K_ANY", Icallback("esc_close"))
+
+    IupShow(dlg)
+    IupSetAttribute(canvas, "RASTERSIZE", NULL)
+    IupMainLoop()
+    IupClose()
+end procedure
+
+main()
