@@ -23,8 +23,8 @@ output = stream.read()
 #        "Loops-While", "Hello-world-Text", "Input-loop", "Temperature-conversion", "Palindrome-detection", "Tokenize-a-string", "Sum-digits-of-an-integer", "Sorting-algorithms-Quicksort",  \
 #        "Sorting-algorithms-Merge-sort", "Sorting-algorithms-Bubble-sort", "Substring-Top-and-tail", "Roman-numerals-Encode", "Even-or-odd"]
 
-elem_select = ["Fibonacci-sequence", "Sort-an-integer-array", "A+B", "Loops-While", "Hello-world-Text", "Input-loop", "Temperature-conversion", \
-        "Palindrome-detection", "Tokenize-a-string", "Sorting-algorithms-Quicksort", "Substring-Top-and-tail", "Roman-numerals-Encode", "Even-or-odd"]        
+elem_select = ["Loops-For", "Sort-an-integer-array", "Inheritance-Single", "Loops-While", "Hello-world-Text", "Temperature-conversion", \
+        "Palindrome-detection", "Tokenize-a-string", "Roman-numerals-Encode", "Even-or-odd", "Arrays", "XML-XPath", "Sleep", "Create-a-file", "Check-that-file-exists"]       
 
 '''
 for elem in elem_select:
